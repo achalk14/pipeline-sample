@@ -91,6 +91,6 @@ It has multiple steps that includes:
 <!-- CONTACT -->
 ## Contact
 
-Achal Kumar - [@achalk14](https://twitter.com/achalk14) - achal9256@gmail.com
+Achal Kumar - [@achalk14](https://www.linkedin.com/in/achalk14/) - achal9256@gmail.com
 
 Project Link: [https://github.com/achalk14/pipeline-sample](https://github.com/achalk14/pipeline-sample)
