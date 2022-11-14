@@ -1,55 +1,47 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
+# This pipeline uses maven and docker to build, test and package spring boot application.
 name: Java CI with Maven
 
+# Trigger when pushed to main branch or pull requests are opened for main branch
 on:
   push:
-    branches: [ "main", "experiment"]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main", "experiment" ]
+    branches: [ "main" ]
 
 jobs:
   build:
 
-    # runs-on: ubuntu-latest
+    # use mac-os VM to run the job
     runs-on: macos-latest
 
     steps:
+    # checkout repository
     - uses: actions/checkout@v3
+    # install jdk 17 with maven
     - name: Setup Java JDK
       uses: actions/setup-java@v3.6.0
       with:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    # - name: Set up JDK 11
-    #   uses: actions/setup-java@v3
-    #   with:
-    #     java-version: '11'
-    #     distribution: 'temurin'
-    #     cache: maven
+    # use maven to build and test the application
     - name: Build with Maven
       run: mvn -e -B package --file demo-spring/pom.xml
-
-    # # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
-    # - name: Update dependency graph
-    #   uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+    # Install docker on macOS
     - name: Setup Docker on macOS
       uses: douglascamata/setup-docker-macos-action@v1-alpha
-
+    # Log into docker hub using username and token
     - name: Docker Login
       uses: docker/login-action@v2.1.0
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+    # Install buildx to build docker images
     - name: Docker Setup Buildx
       uses: docker/setup-buildx-action@v2.2.1
-
+    # Run docker build and docker push
     - name: Build and push Docker images
       uses: docker/build-push-action@v3.2.0
+      with:
+        push: true
+        tags: achalk/demo-spring:latest
