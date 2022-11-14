@@ -2,10 +2,8 @@ package com.example.demospring.api;
 
 import com.example.demospring.model.Person;
 import com.example.demospring.service.PersonService;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
