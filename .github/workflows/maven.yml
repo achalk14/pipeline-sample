@@ -4,7 +4,7 @@ name: Java CI with Maven
 # Trigger when pushed to main branch or pull requests are opened for main branch
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "experiment" ]
   pull_request:
     branches: [ "main" ]
 
